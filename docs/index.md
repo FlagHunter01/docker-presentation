@@ -3,7 +3,7 @@ title : Docker
 description : Page temporaire pour la rédaction du devoir sur Docker
 ---
 
-![Docker logo](https ://www.docker.com/wp-content/uploads/2023/08/logo-guide-logos-1.svg)
+![Docker logo](https://www.docker.com/wp-content/uploads/2023/08/logo-guide-logos-1.svg)
 
 ## Présentation de Docker, Inc.
 
