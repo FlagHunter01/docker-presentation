@@ -3,6 +3,8 @@ title: Docker
 description: Page temporaire pour la rédaction du devoir sur Docker
 ---
 
+![Docker logo](https://www.docker.com/wp-content/uploads/2023/08/logo-guide-logos-1.svg)
+
 ## Présentation de Docker, Inc.
 
 dotCoud, Inc. est une société américaine fondée en 2008 par Kamel Founadi, Solomon Hykes et Sebastien Pahl. A l'origine, il s'agissait d'une PaaS (Platform as a Service) qui permettait aux développeurs de compiler et exécuter du code sur leur plateforme.
