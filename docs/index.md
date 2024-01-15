@@ -13,7 +13,7 @@ En 2013, la société se renomme Docker, Inc et lance un produit homonyme qui r�
 
 - Leur produit phare homonyme est un moteur de conteneur qui occupe aujourd’hui la moitié du marché mondial. 
 - DockerHub est une solution de stockage et de distribution de conteneurs, comme un GitHub spécialisé pour les conteneurs. Il est utilisé par des organisations mondialement connues. 
-- containerd est le runtime de conteneur (l’équivalent d’un hyperviseur pour une machine virtuelle) de Docker. containerd à été donné par Docker à la Linux Foundation et est aujourd’hui le runtime standard de la CNCF (Cloud Native Computing Foundation)
+- containerd est le runtime[^1] de conteneur (l’équivalent d’un hyperviseur pour une machine virtuelle) de Docker. containerd à été donné par Docker à la Linux Foundation et est aujourd’hui le runtime standard de la CNCF (Cloud Native Computing Foundation)
 - Le projet Moby est composé de librairies pour la gestion de conteneurs, un cadre de test et de déploiement de conteneurs. Il sert à la construction de systèmes plus complexes basés sur Docker et containerd. 
 - Docker Scout est un analyseur de conteneurs qui aide les développeurs à corriger les vulnérabilités connues. 
 
@@ -33,7 +33,7 @@ Grâce à ceci, nous pouvons éclater les serveurs en plusieurs conteneurs respo
   <figcaption>Comparaison d’ensemble entre les conteneurs et les machines virtuelles</figcaption>
 </figure>  
 
-Les conteneurs présentent aussi un gros avantage pour le développement d’applications car ils permettent de s’affranchir des contraintes de l’environnement : une fois exportée avec ses dépendances, une image de conteneur est autosuffisante et peut être exécutée sur n’importe quelle machine qui prend en charge Docker, indépendamment du système d’exploitation ou de caractéristiques matérielles. 
+Les conteneurs présentent aussi un gros avantage pour le développement d’applications car ils permettent de s’affranchir des contraintes de l’environnement : une fois exportée avec ses dépendances, une image[^2] de conteneur est autosuffisante et peut être exécutée sur n’importe quelle machine qui prend en charge Docker, indépendamment du système d’exploitation ou de caractéristiques matérielles. 
 
 Docker est un outil extrêmement puissant qui permet de développer des conteneurs, créer des images, les exporter, les lancer et les gérer. 
 
@@ -58,11 +58,11 @@ Celà-dit, containerd ne crée pas les conteneurs lui-même et doit faire appel 
 Dans son état initial, un conteneur est une archive contenant une image et un fichier de configuration JSON.
 
 L’image de conteneur à la même fonction qu’une image de machine virtuelle, elle contient les binaires à exécuter. <br>
-Le fichier JSON sert à transmettre les directives relatives aux binaires à exécuter, à l’allocation des ressources et à l’emplacement du rootfs.
+Le fichier JSON sert à transmettre les directives relatives aux binaires à exécuter, à l’allocation des ressources et à l’emplacement du rootfs[^3].
 
-Chez Docker, le conteneur est extrait, exécuté puis géré par libcontainer. C’est ce programme qui exécute les actions de bas niveau, notamment la communication avec le système (namespaces, cgroups etc). C’est le véritable runtime de Docker. 
+Chez Docker, le conteneur est extrait, exécuté puis géré par libcontainer. C’est ce programme qui exécute les actions de bas niveau, notamment la communication avec le système (namespaces[^4], cgroups etc). C’est le véritable runtime de Docker. 
 
-libcontainer possède une API : runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. C’est l’API runtime officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
+libcontainer possède une API[^6] : runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. C’est l’API runtime officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
 
 <figure markdown>
   ![Image title](3.png){ loading=lazy }
@@ -71,7 +71,7 @@ libcontainer possède une API : runc. Cette dernière permet d'interagir avec li
 
 ### Lien entre les deux niveaux
 
-containerd n’appelle pas directement runc pour créer un conteneur. Une shim est utilisée pour rendre les conteneurs indépendants de Docker. <br>
+containerd n’appelle pas directement runc pour créer un conteneur. Une shim[^5] est utilisée pour rendre les conteneurs indépendants de Docker. <br>
 Ceci à plusieurs avantages :
 
 - Une fois le conteneur démarré, runc peut s’arrêter. Ceci limite la quantité de processus qui fonctionnent de façon perpétuelle. 
@@ -157,16 +157,6 @@ Docker permet de faciliter la création et le déploiement d’applications, tou
 
 Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des conteneurs en utilisant des systèmes d’automatisation comme Kubernetes, qui sera abordé dans la prochaine partie. 
 
-
-!!! warning "A supprimer en web?"
-    ## Lexique
-    Runtime : environnement d’exécution d’un programme qui est responsable de la communication entre le programme et le matériel et le système d’exploitation. 
-    Image : c’est en tant qu’image qu’un conteneur inactif persiste dans le temps, semblable à une image de machine virtuelle. 
-    rootfs : Root File System, l’emplacement du dossier racine du système de fichiers du système. 
-    Namespaces : dans un système d’exploitation, tous les noms doivent être uniques (on ne peut pas avoir deux fichiers ou processus ayant le même nom). Ceci est très limitant, notamment pour faire tourner plusieurs conteneurs en parallèle. namespaces permet de définir la portée des noms et donc de les réutiliser sans créer de conflits. 
-    shim : une shim est un interface qui intercepte les appels système et API d’un programme pour les traiter soi-même. Elles sont souvent utilisées pour pallier des problèmes de compatibilité entre programmes vieillissants. 
-    API : Application Programming Interface désigne une interface qui permet à un programme de communiquer avec d’autres en se basant sur un protocole de communication commun.
-
 ## Sources
 
 !!! question "Lier les sources directement depuis le texte?"
@@ -196,3 +186,15 @@ Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des
 - [Faille runC](https ://www.lemondeinformatique.fr/actualites/lire-snyk-aide-les-devsecops-a-gerer-les-risques-des-applications-cloud-92456.html)
 - [Quarkslab - Digging into runtimes](https ://blog.quarkslab.com/digging-into-runtimes-runc.html)
 - [Wikipedia - Diagramme des paquetages](https ://fr.wikipedia.org/wiki/Diagramme_des_paquetages)
+
+[^1]: Runtime : environnement d’exécution d’un programme qui est responsable de la communication entre le programme et le matériel et le système d’exploitation. 
+
+[^2]: Image : c’est en tant qu’image qu’un conteneur inactif persiste dans le temps, semblable à une image de machine virtuelle. 
+
+[^3]: rootfs : Root File System, l’emplacement du dossier racine du système de fichiers du système. 
+
+[^4]: namespaces : dans un système d’exploitation, tous les noms doivent être uniques (on ne peut pas avoir deux fichiers ou processus ayant le même nom). Ceci est très limitant, notamment pour faire tourner plusieurs conteneurs en parallèle. namespaces permet de définir la portée des noms et donc de les réutiliser sans créer de conflits. 
+
+[^5]: shim : une shim est un interface qui intercepte les appels système et API d’un programme pour les traiter soi-même. Elles sont souvent utilisées pour pallier des problèmes de compatibilité entre programmes vieillissants. 
+
+[^6]: API : Application Programming Interface désigne une interface qui permet à un programme de communiquer avec d’autres en se basant sur un protocole de communication commun.
