@@ -1,15 +1,15 @@
 ---
-title: Docker
-description: Page temporaire pour la rédaction du devoir sur Docker
+title : Docker
+description : Page temporaire pour la rédaction du devoir sur Docker
 ---
 
-![Docker logo](https://www.docker.com/wp-content/uploads/2023/08/logo-guide-logos-1.svg)
+![Docker logo](https ://www.docker.com/wp-content/uploads/2023/08/logo-guide-logos-1.svg)
 
 ## Présentation de Docker, Inc.
 
 dotCoud, Inc. est une société américaine fondée en 2008 par Kamel Founadi, Solomon Hykes et Sebastien Pahl. A l'origine, il s'agissait d'une PaaS (Platform as a Service) qui permettait aux développeurs de compiler et exécuter du code sur leur plateforme.
 
-En 2013, la société se renomme Docker, Inc et lance un produit homonyme qui révolutionne l’utilisation des conteneurs. Au fil du temps, Docker développe plusieurs produits qui sont considérés aujourd’hui comme des standards de l’industrie des conteneurs:
+En 2013, la société se renomme Docker, Inc et lance un produit homonyme qui révolutionne l’utilisation des conteneurs. Au fil du temps, Docker développe plusieurs produits qui sont considérés aujourd’hui comme des standards de l’industrie des conteneurs :
 
 - Leur produit phare homonyme est un moteur de conteneur qui occupe aujourd’hui la moitié du marché mondial. 
 - DockerHub est une solution de stockage et de distribution de conteneurs, comme un GitHub spécialisé pour les conteneurs. Il est utilisé par des organisations mondialement connues. 
@@ -33,7 +33,7 @@ Grâce à ceci, nous pouvons éclater les serveurs en plusieurs conteneurs respo
   <figcaption>Comparaison d’ensemble entre les conteneurs et les machines virtuelles</figcaption>
 </figure>  
 
-Les conteneurs présentent aussi un gros avantage pour le développement d’applications car ils permettent de s’affranchir des contraintes de l’environnement: une fois exportée avec ses dépendances, une image de conteneur est autosuffisante et peut être exécutée sur n’importe quelle machine qui prend en charge Docker, indépendamment du système d’exploitation ou de caractéristiques matérielles. 
+Les conteneurs présentent aussi un gros avantage pour le développement d’applications car ils permettent de s’affranchir des contraintes de l’environnement : une fois exportée avec ses dépendances, une image de conteneur est autosuffisante et peut être exécutée sur n’importe quelle machine qui prend en charge Docker, indépendamment du système d’exploitation ou de caractéristiques matérielles. 
 
 Docker est un outil extrêmement puissant qui permet de développer des conteneurs, créer des images, les exporter, les lancer et les gérer. 
 
@@ -62,7 +62,7 @@ Le fichier JSON sert à transmettre les directives relatives aux binaires à ex�
 
 Chez Docker, le conteneur est extrait, exécuté puis géré par libcontainer. C’est ce programme qui exécute les actions de bas niveau, notamment la communication avec le système (namespaces, cgroups etc). C’est le véritable runtime de Docker. 
 
-libcontainer possède une API: runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. C’est l’API runtime officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
+libcontainer possède une API : runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. C’est l’API runtime officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
 
 <figure markdown>
   ![Image title](3.png){ loading=lazy }
@@ -72,16 +72,16 @@ libcontainer possède une API: runc. Cette dernière permet d'interagir avec lib
 ### Lien entre les deux niveaux
 
 containerd n’appelle pas directement runc pour créer un conteneur. Une shim est utilisée pour rendre les conteneurs indépendants de Docker. <br>
-Ceci à plusieurs avantages:
+Ceci à plusieurs avantages :
 
 - Une fois le conteneur démarré, runc peut s’arrêter. Ceci limite la quantité de processus qui fonctionnent de façon perpétuelle. 
-- La shin intercepte les entrées / sorties et les descripteurs de fichiers du conteneur:
+- La shin intercepte les entrées / sorties et les descripteurs de fichiers du conteneur :
     - Le conteneur peut ainsi survivre au redémarrage de Docker
     - La shin peut loguer et transmettre les informations d’état du conteneur sans que Docker ait besoin d’attendre le changement d’état avec un appel système.
 
 Ainsi, la shim démarre runc puis récupère le lien de parenté du conteneur au moment où runc s’arrête. 
 
-On obtient donc le diagramme de paquetages complet suivant:
+On obtient donc le diagramme de paquetages complet suivant :
 
 <figure markdown>
   ![Image title](4.png){ loading=lazy }
@@ -92,56 +92,107 @@ On obtient donc le diagramme de paquetages complet suivant:
 
 ### Sécurité conceptuelle
 
-Les conteneurs sont naturellement moins sujets au risque grâce à leur isolement. Par défaut, leur capacité à interagir avec le système ou les autres conteneurs est très limitée. Il en découle que les risques qu’ils soient contaminés par un code malicieux ou qu’ils infectent le système ou un autre conteneur sont plus faibles. <br>
-De plus, ils sont faciles à mettre à jour ou à arrêter en cas de besoin. 
+Les conteneurs sont naturellement moins sujets au risque grâce à leur isolement. Par défaut, leur capacité à interagir avec le système ou les autres conteneurs est très limitée. Il en découle que les risques qu’ils soient contaminés par un code malicieux ou qu’ils infectent le système ou un autre conteneur sont plus faibles. 
+
+De plus, ils sont faciles à mettre à jour ou à arrêter en cas de besoin, prenant moins de temps et ayant moins d’incidence sur la production que les machines virtuelles normales. 
+
+Les conteneurs ont une durée de vie assez faible, ce qui limite la fenêtre d’action d’un attaquant éventuel et réduit sa probabilité de succès. 
 
 ### Sécurité Linux
 
-Interopérabilité Linux
-(parler des limites, notamment le libsharing)
-LSM (Linux Security Modules)
-SELinux (Mandatory Access Control (MAC))
-seccomp (Isolation des processus des commandes système)
-Capabilities (Gestion de droits par appartenance)
+N’utilisant pas de superviseur, les conteneurs sont gérables avec les outils de sécurité Linux. 
 
-### Aspects négatifs
-- (failles runc)
+Nous verrons ici quelques outils couramment utilisés pour sécuriser les conteneurs sur Linux. 
+
+Docker peut être sécurisé grâce à Linux Security Module,une infrastructure Linux qui permet d’ajouter certaines extensions au noyau, notamment capabilities, SELinux et AppArmor. 
+
+#### capabilities
+
+capabilities est un module de gestion de droits. Les appels système et les exécutables sont associés à des groupes et ne peuvent être exécutés que par un processus appartenant au même groupe. Ceci permet d’avoir un contrôle beaucoup plus fin sur les droits des processus et permet d’implémenter une politique de moindre privilège, renforçant ainsi la sécurité. 
+
+#### SELinux
+
+Security-Enhanced Linux est un autre module de sécurité permettant de mettre en place des contrôles d’accès obligatoires (MAC). Son fonctionnement est semblable à celui de capabilities : chaque entité se voit attribuer des tags, qui correspondent à des autorisations. Si l'action demandée par un processus ne fait pas partie des autorisations dont elle dispose, elle n’est pas exécutée. Une utilisation très granuleuse de ce système entraîne une grande complexité d’administration. <br>
+Par ailleurs, même les processus ayant le PID 0 sont soumis aux politiques. 
+
+#### AppArmor
+
+AppArmor est né du besoin d’avoir un outil plus facilement administrable que SELinux. 
+Il se distingue de ce dernier par sa capacité à étudier les processus et proposer des profils personnalisés automatiquement. En effet, un de ses modes de fonctionnement permet de loguer les infractions au profil par défaut plutôt que de les bloquer. AppArmor propose ensuite un profil de droits en fonction des appels recensés. 
+Contrairement à SELinux, AppArmor fonctionne avec des liens plutôt qu’avec des tags, et est donc compatible avec tous les systèmes de fichiers. 
+
+#### seccomp
+
+secure computing mode permet d’isoler un processus en interdisant tout appel système à l’exception de exit(), sigreturn(), read() et write()sur les descripteurs de fichier déjà ouverts. Si le processus fait un autre appel système, il est tué.  
+
+Cette fonctionnalité peut être utilisée pour isoler efficacement les conteneurs du système. Il est à noter que l'extension seccomp-bpf permet de personnaliser les appels système filtrés pour donner plus de flexibilité aux conteneurs. 
+
+### Points faibles
+
+#### Partage de la mémoire
+
+Les conteneurs sont souvent construits à partir d’autres conteneurs déjà existants, et dépendent souvent des mêmes librairies. 
+
+Si deux conteneurs utilisent la même librairie, elle n'est chargée qu’une seule fois en mémoire et les deux conteneurs y accèdent en concurrence. 
+
+Bien que ceci soit sans danger pour une librairie comme stdlib, des librairies plus complexes pourraient être exploitées pour transmettre des données entre deux conteneurs et offrir ainsi une faille de sécurité potentielle. 
+
+Aujourd’hui, la plupart des conteneurs sont compilés avec toutes leur dépendances de sorte à ne pas avoir à s'appuyer sur des librairies partagées. 
+
+#### Failles découvertes
+
+Depuis la création de Docker, plusieurs failles ont été découvertes. La plus impressionnante donnait la possibilité aux conteneurs d’écraser l’exécutable runc avec leur propre code. Ainsi, containerd, mais Docker et Kubernetes étaient vulnérables à une attaque par conteneur et mettaient en danger le système et les données qui s’y trouvent. 
+
+D’autres failles majeurs ont été découvertes:
+
+Dans certains cas, un conteneur fraîchement démarré pouvait écrire dans des fichiers dont il ne disposait que le droit de lecture. Ceci pouvait lui permettre de faire une escalade de privilèges.
+Une autre vulnérabilité permettait d’injecter du code dans le conteneur lors d’un chargement dynamique de librairie.<br>
+Une version de Docker crashait lorsque le logiciel lisait un fichier JSON erroné au moment de démarrer le conteneur.
+
+## Conclusion
+
+Docker est un outil puissant qui à démocratisé l’utilisation des conteneurs pour le développement d’applications et les services cloud.
+
+Docker permet de faciliter la création et le déploiement d’applications, tout en diminuant leur coût de fonctionnement. Étant autonomes et s’intégrant avec les services de sécurité de Linux, les conteneurs sont aussi un bon vecteur de sécurisation des services d’une organisation. 
+
+Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des conteneurs en utilisant des systèmes d’automatisation comme Kubernetes, qui sera abordé dans la prochaine partie. 
+
 
 !!! warning "A supprimer en web?"
     ## Lexique
-    Runtime: environnement d’exécution d’un programme qui est responsable de la communication entre le programme et le matériel et le système d’exploitation. 
-    Image: c’est en tant qu’image qu’un conteneur inactif persiste dans le temps, semblable à une image de machine virtuelle. 
-    rootfs: Root File System, l’emplacement du dossier racine du système de fichiers du système. 
-    Namespaces: dans un système d’exploitation, tous les noms doivent être uniques (on ne peut pas avoir deux fichiers ou processus ayant le même nom). Ceci est très limitant, notamment pour faire tourner plusieurs conteneurs en parallèle. namespaces permet de définir la portée des noms et donc de les réutiliser sans créer de conflits. 
-    shim: une shim est un interface qui intercepte les appels système et API d’un programme pour les traiter soi-même. Elles sont souvent utilisées pour pallier des problèmes de compatibilité entre programmes vieillissants. 
-    API: Application Programming Interface désigne une interface qui permet à un programme de communiquer avec d’autres en se basant sur un protocole de communication commun.
+    Runtime : environnement d’exécution d’un programme qui est responsable de la communication entre le programme et le matériel et le système d’exploitation. 
+    Image : c’est en tant qu’image qu’un conteneur inactif persiste dans le temps, semblable à une image de machine virtuelle. 
+    rootfs : Root File System, l’emplacement du dossier racine du système de fichiers du système. 
+    Namespaces : dans un système d’exploitation, tous les noms doivent être uniques (on ne peut pas avoir deux fichiers ou processus ayant le même nom). Ceci est très limitant, notamment pour faire tourner plusieurs conteneurs en parallèle. namespaces permet de définir la portée des noms et donc de les réutiliser sans créer de conflits. 
+    shim : une shim est un interface qui intercepte les appels système et API d’un programme pour les traiter soi-même. Elles sont souvent utilisées pour pallier des problèmes de compatibilité entre programmes vieillissants. 
+    API : Application Programming Interface désigne une interface qui permet à un programme de communiquer avec d’autres en se basant sur un protocole de communication commun.
 
 ## Sources
 
 !!! question "Lier les sources directement depuis le texte?"
 
-- [Docker](https://www.docker.com/)
-- [Wikipedia - Docker](https://en.wikipedia.org/wiki/Docker_(software))
-- [Wikipedia - OS virtualization](https://en.wikipedia.org/wiki/OS-level_virtualization)
-- [Palark - Statistiques de marché ](https://blog.palark.com/kubernetes-and-containers-market-trends-2021/)
-- [containerd](https://containerd.io/)
-- [CNCF](https://www.cncf.io/announcements/2019/02/28/cncf-announces-containerd-graduation/)
-- [Moby](https://mobyproject.org/)
-- [Documentation de Docker Scout](https://docs.docker.com/scout/)
-- [stack overflow - containerized vs libcontainer](https://stackoverflow.com/questions/62024186/where-does-libcontainer-stand-in-docker-stack)
-- [opensource.com - runtimes](https://opensource.com/article/18/1/history-low-level-container-runtimes)
-- [Wikipedia - Namespaces](https://en.wikipedia.org/wiki/Namespace)
-- [Wikipedia - SELinux](https://en.wikipedia.org/wiki/Security-Enhanced_Linux)
-- [Documentation de Docker dockerd](https://docs.docker.com/engine/reference/commandline/dockerd/)
-- [PDF de Dockercon16](https://github.com/crosbymichael/dockercon-2016/blob/master/Creating%20Containerd.pdf)
-- [SELinux](https://selinuxproject.org/page/Main_Page)
-- [Wikipedia - seccomp](https://en.wikipedia.org/wiki/Seccomp)
-- [Google - seccomp](https://code.google.com/archive/p/seccompsandbox/wikis/overview.wiki)
-- [Editions Diamond - Capabilities](https://connect.ed-diamond.com/GNU-Linux-Magazine/glmf-164/les-capabilities-sous-linux)
-- [man7 - Capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html)
-- [Wikipedia - runtime](https://fr.wikipedia.org/wiki/Environnement_d%27ex%C3%A9cution)
-- [Wikipedia - Shim](https://en.wikipedia.org/wiki/Shim_(computing))
-- [Demystifying container runtimes](https://lwn.net/Articles/741897/)
-- [Faille runC](https://www.lemondeinformatique.fr/actualites/lire-snyk-aide-les-devsecops-a-gerer-les-risques-des-applications-cloud-92456.html)
-- [Quarkslab - Digging into runtimes](https://blog.quarkslab.com/digging-into-runtimes-runc.html)
-- [Wikipedia - Diagramme des paquetages](https://fr.wikipedia.org/wiki/Diagramme_des_paquetages)
+- [Docker](https ://www.docker.com/)
+- [Wikipedia - Docker](https ://en.wikipedia.org/wiki/Docker_(software))
+- [Wikipedia - OS virtualization](https ://en.wikipedia.org/wiki/OS-level_virtualization)
+- [Palark - Statistiques de marché ](https ://blog.palark.com/kubernetes-and-containers-market-trends-2021/)
+- [containerd](https ://containerd.io/)
+- [CNCF](https ://www.cncf.io/announcements/2019/02/28/cncf-announces-containerd-graduation/)
+- [Moby](https ://mobyproject.org/)
+- [Documentation de Docker Scout](https ://docs.docker.com/scout/)
+- [stack overflow - containerized vs libcontainer](https ://stackoverflow.com/questions/62024186/where-does-libcontainer-stand-in-docker-stack)
+- [opensource.com - runtimes](https ://opensource.com/article/18/1/history-low-level-container-runtimes)
+- [Wikipedia - Namespaces](https ://en.wikipedia.org/wiki/Namespace)
+- [Wikipedia - SELinux](https ://en.wikipedia.org/wiki/Security-Enhanced_Linux)
+- [Documentation de Docker dockerd](https ://docs.docker.com/engine/reference/commandline/dockerd/)
+- [PDF de Dockercon16](https ://github.com/crosbymichael/dockercon-2016/blob/master/Creating%20Containerd.pdf)
+- [SELinux](https ://selinuxproject.org/page/Main_Page)
+- [Wikipedia - seccomp](https ://en.wikipedia.org/wiki/Seccomp)
+- [Google - seccomp](https ://code.google.com/archive/p/seccompsandbox/wikis/overview.wiki)
+- [Editions Diamond - Capabilities](https ://connect.ed-diamond.com/GNU-Linux-Magazine/glmf-164/les-capabilities-sous-linux)
+- [man7 - Capabilities](https ://man7.org/linux/man-pages/man7/capabilities.7.html)
+- [Wikipedia - runtime](https ://fr.wikipedia.org/wiki/Environnement_d%27ex%C3%A9cution)
+- [Wikipedia - Shim](https ://en.wikipedia.org/wiki/Shim_(computing))
+- [Demystifying container runtimes](https ://lwn.net/Articles/741897/)
+- [Faille runC](https ://www.lemondeinformatique.fr/actualites/lire-snyk-aide-les-devsecops-a-gerer-les-risques-des-applications-cloud-92456.html)
+- [Quarkslab - Digging into runtimes](https ://blog.quarkslab.com/digging-into-runtimes-runc.html)
+- [Wikipedia - Diagramme des paquetages](https ://fr.wikipedia.org/wiki/Diagramme_des_paquetages)
