@@ -1,0 +1,186 @@
+# Displayed title TODO: customize 
+site_name: Docker et Kubernetes
+# General description
+site_description: Version web ne notre rapport sur la recherche documentaire concernant Docker et Kubernetes
+# Author of the site
+site_author: Astrid LEVEQUE et Tim FROLOV
+# Copyright notice in the footer
+# URL of the site
+site_url: https://docker.frolov.eu/
+# URL of the GitHub repo TODO: customize
+repo_url: https://github.com/FlagHunter01/docker-presentation
+# Name of the repo TODO: customize
+repo_name: FlagHunter01/docker-presentation
+# URL of docs folder FIXME: comment if help not wanted!
+#edit_uri: edit/main/docs/
+
+
+
+nav:
+    - Docker: index.md
+    - Kubernetes: kubernetes.md
+
+
+theme:
+  name: material
+
+  # 1 per project (HTML5 limitation)
+  language: fr
+
+  #logo: assets/logo.png
+  icon:
+    logo: fontawesome/brands/docker
+  favicon: assets/logo.png
+
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: light blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: light blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+
+  features:
+    # Copy to clipboard button in code blocks
+    - content.code.copy
+    # Next and previous buttons in footer
+    - navigation.footer
+    # Monopage architecture (TODO: does it work?)
+    - navigation.instant
+    # Update URL with current anchor
+    - navigation.tracking
+    # Show tabs in the top menu
+    - navigation.tabs
+    # Show tabs in the left menu
+    - navigation.sections
+    # Auto-expand left menu
+    - navigation.expand
+    # Breadcrumbs displayed on top of the page
+    - navigation.path
+    # First page of section serves as a preview (https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages)
+    - navigation.indexes
+    # Autoscroll menus so the current page is allways visible
+    - toc.follow
+    # Back to top button
+    - navigation.top
+    # Search auto completion
+    - search.suggest
+    # Hightlight search results
+    - search.highlight
+    # Link content tabs togeather across the page
+    - content.tabs.link
+    # Better tooltips
+    - content.tooltips
+    # Link to source code
+    - content.action.edit
+
+
+plugins:
+  # Self-host all ressources aka fonts, icons etc (RGPD)
+  #- privacy
+  # Client side search
+  - search
+  # Social cards - previews on social networks. Can't figure it out for Windows yet.
+  - social
+  # Blog. Required arborescence: https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/#built-in-blog-plugin
+  #- blog
+  # Table of contents keeps the formating (icons, underline etc)
+  #- typeset
+
+
+  # Revision date info for GitHub repos TODO: uncomment if repo
+  - git-revision-date-localized:
+      enable_creation_date: true
+      #fallback_to_build_date: true
+  - git-committers:
+      repository: FlagHunter01/school
+      branch: main
+  #- git-authors
+  # Optimize for offline use
+  - offline
+
+
+#extra:
+  # Page status that can be displayed
+  #status:
+  #  new: Nouveau
+  #  deprecated: Contrôle passé
+  # Social links in the footer
+  #social:
+  #  - icon: fontawesome/brands/github
+  #    link: https://github.com/flaghunter01/
+  # Main logo link URL. site_url by default
+  #homepage: site_url
+
+
+  # Multiple languages support
+  #alternate:
+  #   - name: English
+  #     link: /en/
+  #     lang: en
+  #   - name: Français
+  #     link: /fr/
+  #     lang: fr
+
+markdown_extensions:
+  # Support for admonitions
+  - admonition
+  # Annotations, grids, buttons, tooltips, colored icons, image alignment and lazy images
+  - attr_list
+  # Add footnotes
+  - footnotes
+  # Allows the useagse of HTML
+  - md_in_html
+  # Generates tables of content.
+  - toc:
+      # Visible anchor
+      permalink: ⚓︎
+  # Draw tables
+  - tables
+  # Underline and superscript
+  - pymdownx.caret
+  # Hightlight
+  - pymdownx.mark
+  # Subscript and deleted
+  - pymdownx.tilde
+  # make admonitions colabseable
+  - pymdownx.details
+  # Highlight code blocks
+  - pymdownx.highlight:
+      anchor_linenums: true
+  # Nesting of just about everything
+  - pymdownx.superfences
+  # Draw keys
+  - pymdownx.keys
+  # Separate content into different tabs
+  - pymdownx.tabbed:
+      alternate_style: true
+  # Taxk lists
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+#extra_css:
+#  - stylesheets/extra.css
