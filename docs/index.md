@@ -9,7 +9,7 @@ description: Partie du rapport traitant de Docker
 
 dotCoud, Inc. est une société américaine fondée en 2008 par Kamel Founadi, Solomon Hykes et Sebastien Pahl. A l'origine, il s'agissait d'une PaaS (Platform as a Service) qui permettait aux développeurs de compiler et exécuter du code sur leur plateforme.
 
-En 2013, la société se renomme Docker, Inc et lance un produit homonyme qui révolutionne l’utilisation des conteneurs. Au fil du temps, Docker développe plusieurs produits qui sont considérés aujourd’hui comme des standards de l’industrie des conteneurs :
+En 2013, la société se renomma Docker, Inc et lança un produit homonyme qui révolutionna l’utilisation des conteneurs. Au fil du temps, Docker développa plusieurs produits qui sont encore considérés aujourd’hui comme des standards de l’industrie des conteneurs :
 
 - Leur produit phare homonyme est un moteur de conteneur qui occupe aujourd’hui la moitié du marché mondial. 
 - DockerHub est une solution de stockage et de distribution de conteneurs, comme un GitHub spécialisé pour les conteneurs. Il est utilisé par des organisations mondialement connues. 
@@ -29,7 +29,7 @@ Nous allons à présent nous concentrer sur le produit Docker, et plus particuli
 
 Docker est un moteur de conteneurisation, c'est-à-dire un outil qui permet de les construire, les exécuter et les gérer. 
 
-La conteneurisation est une forme de virtualisation alternative qui n’émule pas de système d’exploitation complet. Chaque conteneur fonctionne dans un environnement qui contient les éléments strictement nécessaires à sa fonction. <br>
+La conteneurisation est une forme de virtualisation alternative qui n’émule pas de système d’exploitation complet. Chaque conteneur fonctionne dans un environnement qui contient les éléments strictement nécessaires à son fonctionnement.  <br>
 Grâce à ceci, nous pouvons éclater les serveurs en plusieurs conteneurs responsables chacun d’un service. Ceci permet d’avoir un contrôle plus fin des ressources allouées et facilite la continuité de production pendant les mises à jour. En effet, il est plus facile de prédire les besoins d’un programme unique comme Apache qu’un système entier. Ainsi, les conteneurs sont moins gourmands en ressources que les machines virtuelles standard. De plus, la possibilité de gérer les conteneurs individuellement permet de cibler les arrêts programmés sans aucune répercussion sur les autres services en cours. 
 
 <figure markdown>
@@ -45,7 +45,7 @@ Docker est un outil extrêmement puissant qui permet de développer des conteneu
 
 Derrière son faible coût opérationnel et son interface intuitive se cache un outil complexe, dont nous étudierons les principes de base de fonctionnement ci-dessous. 
 
-- Quand on utilise l’interface de Docker (quand on clique sur le bouton “arrêter le conteneur” par exemple), nos actions sont interprétées par un daemon, dockerd. Celui-ci est responsable des tâches de haut niveau comme le build ou l’authentification. 
+- Lors d'une interaction avec l'interface de docker (comme un clique sur le bouton “arrêter le conteneur”), les actions sont interprétées par un daemon, dockerd. Celui-ci est responsable des tâches de haut niveau comme le build ou l’authentification. 
 - containerd est un autre daemon responsable du cycle de vie des conteneurs (démarrage, gestion, arrêt), de la gestion de leur images[^2] ainsi que d’autres opérations comme la gestion des ressources de stockage et du réseau virtuel. Il est couramment surnommé “runtime[^1] de haut niveau”. 
 
 Ces deux daemons communiquent par gRCP (envoi de commandes via des ports réseau). 
@@ -64,9 +64,9 @@ Dans son état initial, un conteneur est une archive contenant une image[^2] et 
 L’image[^2] de conteneur à la même fonction qu’une image de machine virtuelle, elle contient les binaires à exécuter. <br>
 Le fichier JSON sert à transmettre les directives relatives aux binaires à exécuter, à l’allocation des ressources et à l’emplacement du rootfs[^3].
 
-Chez Docker, le conteneur est extrait, exécuté puis géré par libcontainer. C’est ce programme qui exécute les actions de bas niveau, notamment la communication avec le système (namespaces[^4], cgroups etc). C’est le véritable runtime[^1] de Docker. 
+Chez Docker, le conteneur est extrait, exécuté puis géré par libcontainer. C’est ce programme qui exécute les actions de bas niveau, notamment la communication avec le système (namespaces[^4], cgroups etc). libcontainer le véritable runtime[^1] de Docker. 
 
-libcontainer possède une API[^6] : runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. C’est l’API[^6] runtime[^1] officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
+libcontainer possède une API[^6] : runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. Elle est l’API[^6] runtime[^1] officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
 
 <figure markdown>
   ![Image title](3.png){ loading=lazy }
@@ -79,9 +79,9 @@ containerd n’appelle pas directement runc pour créer un conteneur. Une shim[^
 Ceci à plusieurs avantages :
 
 - Une fois le conteneur démarré, runc peut s’arrêter. Ceci limite la quantité de processus qui fonctionnent de façon perpétuelle. 
-- La shin intercepte les entrées / sorties et les descripteurs de fichiers du conteneur :
+- La shim[^5] intercepte les entrées / sorties et les descripteurs de fichiers du conteneur :
     - Le conteneur peut ainsi survivre au redémarrage de Docker
-    - La shin peut loguer et transmettre les informations d’état du conteneur sans que Docker ait besoin d’attendre le changement d’état avec un appel système.
+    - La shim[^5] peut loguer et transmettre les informations d’état du conteneur sans que Docker ait besoin d’attendre le changement d’état avec un appel système.
 
 Ainsi, la shim[^5] démarre runc puis récupère le lien de parenté du conteneur au moment où runc s’arrête. 
 
@@ -96,7 +96,7 @@ On obtient donc le diagramme de paquetages complet suivant :
 
 ### Sécurité conceptuelle
 
-Les conteneurs sont naturellement moins sujets au risque grâce à leur isolement. Par défaut, leur capacité à interagir avec le système ou les autres conteneurs est très limitée. Il en découle que les risques qu’ils soient contaminés par un code malicieux ou qu’ils infectent le système ou un autre conteneur sont plus faibles. 
+Les conteneurs sont naturellement moins sujets aux risques grâce à leur isolement. Par défaut, leurs capacités à interagir avec le système ou les autres conteneurs est très limitée. Il en découle que les risques qu’ils soient contaminés par un code malicieux ou qu’ils infectent le système ou un autre conteneur sont plus faibles. 
 
 De plus, ils sont faciles à mettre à jour ou à arrêter en cas de besoin, prenant moins de temps et ayant moins d’incidence sur la production que les machines virtuelles normales. 
 
