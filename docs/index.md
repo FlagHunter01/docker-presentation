@@ -159,33 +159,42 @@ Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des
 
 ## Sources
 
-!!! question "Lier les sources directement depuis le texte?"
+- [Docker](https://www.docker.com/)
+- [Wikipedia](https://en.wikipedia.org/wiki/Docker_(software)) - Docker
+- [Palark](https://blog.palark.com/kubernetes-and-containers-market-trends-2021/) - Statistiques de marché
+- [Moby](https://mobyproject.org/)
+- [Docker Scout](https://docs.docker.com/scout/) - Documentation
 
-- [Docker](https ://www.docker.com/)
-- [Wikipedia - Docker](https ://en.wikipedia.org/wiki/Docker_(software))
-- [Wikipedia - OS virtualization](https ://en.wikipedia.org/wiki/OS-level_virtualization)
-- [Palark - Statistiques de marché ](https ://blog.palark.com/kubernetes-and-containers-market-trends-2021/)
-- [containerd](https ://containerd.io/)
-- [CNCF](https ://www.cncf.io/announcements/2019/02/28/cncf-announces-containerd-graduation/)
-- [Moby](https ://mobyproject.org/)
-- [Documentation de Docker Scout](https ://docs.docker.com/scout/)
-- [stack overflow - containerized vs libcontainer](https ://stackoverflow.com/questions/62024186/where-does-libcontainer-stand-in-docker-stack)
-- [opensource.com - runtimes](https ://opensource.com/article/18/1/history-low-level-container-runtimes)
-- [Wikipedia - Namespaces](https ://en.wikipedia.org/wiki/Namespace)
-- [Wikipedia - SELinux](https ://en.wikipedia.org/wiki/Security-Enhanced_Linux)
-- [Documentation de Docker dockerd](https ://docs.docker.com/engine/reference/commandline/dockerd/)
-- [PDF de Dockercon16](https ://github.com/crosbymichael/dockercon-2016/blob/master/Creating%20Containerd.pdf)
-- [SELinux](https ://selinuxproject.org/page/Main_Page)
-- [Wikipedia - seccomp](https ://en.wikipedia.org/wiki/Seccomp)
-- [Google - seccomp](https ://code.google.com/archive/p/seccompsandbox/wikis/overview.wiki)
-- [Editions Diamond - Capabilities](https ://connect.ed-diamond.com/GNU-Linux-Magazine/glmf-164/les-capabilities-sous-linux)
-- [man7 - Capabilities](https ://man7.org/linux/man-pages/man7/capabilities.7.html)
-- [Wikipedia - runtime](https ://fr.wikipedia.org/wiki/Environnement_d%27ex%C3%A9cution)
-- [Wikipedia - Shim](https ://en.wikipedia.org/wiki/Shim_(computing))
-- [Demystifying container runtimes](https ://lwn.net/Articles/741897/)
-- [Faille runC](https ://www.lemondeinformatique.fr/actualites/lire-snyk-aide-les-devsecops-a-gerer-les-risques-des-applications-cloud-92456.html)
-- [Quarkslab - Digging into runtimes](https ://blog.quarkslab.com/digging-into-runtimes-runc.html)
-- [Wikipedia - Diagramme des paquetages](https ://fr.wikipedia.org/wiki/Diagramme_des_paquetages)
+<hr>
+
+- [Wikipedia](https://en.wikipedia.org/wiki/OS-level_virtualization) - OS virtualization
+- [containerd](https://containerd.io/)
+- [Docker](https://docs.docker.com/engine/reference/commandline/dockerd/) - dockerd
+- [Cloud Native Computing Foundation](https://www.cncf.io/announcements/2019/02/28/cncf-announces-containerd-graduation/) - containerd graduation
+- [Stack Overflow](https://stackoverflow.com/questions/62024186/where-does-libcontainer-stand-in-docker-stack) - containerized vs libcontainer
+- [opensource.com](https://opensource.com/article/18/1/history-low-level-container-runtimes) - runtimes
+- [Wikipedia](https://fr.wikipedia.org/wiki/Environnement_d%27ex%C3%A9cution) - runtime
+- [LWN.ney](https://lwn.net/Articles/741897/) - Demystifying container runtimes
+- [PDF de Dockercon16](https://github.com/crosbymichael/dockercon-2016/blob/master/Creating%20Containerd.pdf)
+- [Quarkslab](https://blog.quarkslab.com/digging-into-runtimes-runc.html) - Digging into runtimes
+- [Wikipedia](https://en.wikipedia.org/wiki/Namespace) - namespaces
+- [Wikipedia](https://en.wikipedia.org/wiki/Shim_(computing)) - Shim
+
+<hr>
+
+- [The Linux Kernel](https://www.kernel.org/doc/html/v4.16/admin-guide/LSM/index.html) - Linux Security Module Usage
+- [Editions Diamond](https://connect.ed-diamond.com/GNU-Linux-Magazine/glmf-164/les-capabilities-sous-linux) - Capabilities
+- [man7](https://man7.org/linux/man-pages/man7/capabilities.7.html) - Capabilities
+- [Wikipedia](https://en.wikipedia.org/wiki/Security-Enhanced_Linux) - SELinux
+- [SELinux](https://selinuxproject.org/page/Main_Page)
+- [Wikipedia](https://fr.wikipedia.org/wiki/AppArmor) - AppArmor
+- [Wikipedia](https://en.wikipedia.org/wiki/Seccomp) - seccomp
+- [Google](https://code.google.com/archive/p/seccompsandbox/wikis/overview.wiki) - seccomp
+- [LEMONDEINFORMATIQUE](hhttps://www.lemondeinformatique.fr/actualites/lire-une-faille-dans-runc-rend-vulnerable-docker-et-kubernetes-74312.html) - Une faille dans Runc rend vulnérable Docker et Kubernetes
+
+<hr>
+
+- [Wikipedia - Diagramme des paquetages](https://fr.wikipedia.org/wiki/Diagramme_des_paquetages)
 
 [^1]: Runtime : environnement d’exécution d’un programme qui est responsable de la communication entre le programme et le matériel et le système d’exploitation. 
 
