@@ -13,7 +13,11 @@ En 2013, la société se renomme Docker, Inc et lance un produit homonyme qui r�
 
 - Leur produit phare homonyme est un moteur de conteneur qui occupe aujourd’hui la moitié du marché mondial. 
 - DockerHub est une solution de stockage et de distribution de conteneurs, comme un GitHub spécialisé pour les conteneurs. Il est utilisé par des organisations mondialement connues. 
-- containerd est le runtime[^1] de conteneur (l’équivalent d’un hyperviseur pour une machine virtuelle) de Docker. containerd à été donné par Docker à la Linux Foundation et est aujourd’hui le runtime standard de la CNCF (Cloud Native Computing Foundation)
+
+!!! inline end info "Lexique"
+    Les termes techniques comme runtime[^1] sont définis dans le lexique en bas de page.
+
+- containerd est le ==runtime[^1]== de conteneur (l’équivalent d’un hyperviseur pour une machine virtuelle) de Docker. containerd à été donné par Docker à la Linux Foundation et est aujourd’hui le runtime[^1] standard de la CNCF (Cloud Native Computing Foundation)
 - Le projet Moby est composé de librairies pour la gestion de conteneurs, un cadre de test et de déploiement de conteneurs. Il sert à la construction de systèmes plus complexes basés sur Docker et containerd. 
 - Docker Scout est un analyseur de conteneurs qui aide les développeurs à corriger les vulnérabilités connues. 
 
@@ -35,14 +39,14 @@ Grâce à ceci, nous pouvons éclater les serveurs en plusieurs conteneurs respo
 
 Les conteneurs présentent aussi un gros avantage pour le développement d’applications car ils permettent de s’affranchir des contraintes de l’environnement : une fois exportée avec ses dépendances, une image[^2] de conteneur est autosuffisante et peut être exécutée sur n’importe quelle machine qui prend en charge Docker, indépendamment du système d’exploitation ou de caractéristiques matérielles. 
 
-Docker est un outil extrêmement puissant qui permet de développer des conteneurs, créer des images, les exporter, les lancer et les gérer. 
+Docker est un outil extrêmement puissant qui permet de développer des conteneurs, créer des images[^2], les exporter, les lancer et les gérer. 
 
 ### Fonctionnement de haut niveau
 
 Derrière son faible coût opérationnel et son interface intuitive se cache un outil complexe, dont nous étudierons les principes de base de fonctionnement ci-dessous. 
 
 - Quand on utilise l’interface de Docker (quand on clique sur le bouton “arrêter le conteneur” par exemple), nos actions sont interprétées par un daemon, dockerd. Celui-ci est responsable des tâches de haut niveau comme le build ou l’authentification. 
-- containerd est un autre daemon responsable du cycle de vie des conteneurs (démarrage, gestion, arrêt), de la gestion de leur images ainsi que d’autres opérations comme la gestion des ressources de stockage et du réseau virtuel. Il est couramment surnommé “runtime de haut niveau”. 
+- containerd est un autre daemon responsable du cycle de vie des conteneurs (démarrage, gestion, arrêt), de la gestion de leur images[^2] ainsi que d’autres opérations comme la gestion des ressources de stockage et du réseau virtuel. Il est couramment surnommé “runtime[^1] de haut niveau”. 
 
 Ces deux daemons communiquent par gRCP (envoi de commandes via des ports réseau). 
 
@@ -55,14 +59,14 @@ Celà-dit, containerd ne crée pas les conteneurs lui-même et doit faire appel 
 
 ### Fonctionnement de bas niveau
 
-Dans son état initial, un conteneur est une archive contenant une image et un fichier de configuration JSON.
+Dans son état initial, un conteneur est une archive contenant une image[^2] et un fichier de configuration JSON.
 
-L’image de conteneur à la même fonction qu’une image de machine virtuelle, elle contient les binaires à exécuter. <br>
+L’image[^2] de conteneur à la même fonction qu’une image de machine virtuelle, elle contient les binaires à exécuter. <br>
 Le fichier JSON sert à transmettre les directives relatives aux binaires à exécuter, à l’allocation des ressources et à l’emplacement du rootfs[^3].
 
-Chez Docker, le conteneur est extrait, exécuté puis géré par libcontainer. C’est ce programme qui exécute les actions de bas niveau, notamment la communication avec le système (namespaces[^4], cgroups etc). C’est le véritable runtime de Docker. 
+Chez Docker, le conteneur est extrait, exécuté puis géré par libcontainer. C’est ce programme qui exécute les actions de bas niveau, notamment la communication avec le système (namespaces[^4], cgroups etc). C’est le véritable runtime[^1] de Docker. 
 
-libcontainer possède une API[^6] : runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. C’est l’API runtime officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
+libcontainer possède une API[^6] : runc. Cette dernière permet d'interagir avec libcontainer par ligne de commande. C’est l’API[^6] runtime[^1] officielle de la Open Container Initiative depuis que Docker leur à fait don de libcontainer. 
 
 <figure markdown>
   ![Image title](3.png){ loading=lazy }
@@ -79,7 +83,7 @@ Ceci à plusieurs avantages :
     - Le conteneur peut ainsi survivre au redémarrage de Docker
     - La shin peut loguer et transmettre les informations d’état du conteneur sans que Docker ait besoin d’attendre le changement d’état avec un appel système.
 
-Ainsi, la shim démarre runc puis récupère le lien de parenté du conteneur au moment où runc s’arrête. 
+Ainsi, la shim[^5] démarre runc puis récupère le lien de parenté du conteneur au moment où runc s’arrête. 
 
 On obtient donc le diagramme de paquetages complet suivant :
 
@@ -159,6 +163,8 @@ Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des
 
 ## Sources
 
+**Introduction:**
+
 - [Docker](https://www.docker.com/)
 - [Wikipedia](https://en.wikipedia.org/wiki/Docker_(software)) - Docker
 - [Palark](https://blog.palark.com/kubernetes-and-containers-market-trends-2021/) - Statistiques de marché
@@ -166,6 +172,8 @@ Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des
 - [Docker Scout](https://docs.docker.com/scout/) - Documentation
 
 <hr>
+
+**Fonctionnement de Docker:**
 
 - [Wikipedia](https://en.wikipedia.org/wiki/OS-level_virtualization) - OS virtualization
 - [containerd](https://containerd.io/)
@@ -182,6 +190,8 @@ Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des
 
 <hr>
 
+**Sécurité:**
+
 - [The Linux Kernel](https://www.kernel.org/doc/html/v4.16/admin-guide/LSM/index.html) - Linux Security Module Usage
 - [Editions Diamond](https://connect.ed-diamond.com/GNU-Linux-Magazine/glmf-164/les-capabilities-sous-linux) - Capabilities
 - [man7](https://man7.org/linux/man-pages/man7/capabilities.7.html) - Capabilities
@@ -194,7 +204,10 @@ Cela-dit, il est possible d’augmenter encore la fiabilité et le rendement des
 
 <hr>
 
-- [Wikipedia - Diagramme des paquetages](https://fr.wikipedia.org/wiki/Diagramme_des_paquetages)
+**Rédaction:**
+
+- [Wikipedia](https://fr.wikipedia.org/wiki/Diagramme_des_paquetages) - Diagramme des paquetages
+- [Université de Liège](http://www.ingveh.ulg.ac.be/uploads/education/misc/REDIGER_UN_RAPPORT_TECHNIQUE.pdf) - Comment rédiger un rapport technique ?
 
 [^1]: Runtime : environnement d’exécution d’un programme qui est responsable de la communication entre le programme et le matériel et le système d’exploitation. 
 
