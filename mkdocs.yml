@@ -21,6 +21,7 @@ nav:
         - index.md
         - 1 - Docker: docker.md
         - 2 - Kubernetes: kubernetes.md
+        - 3 - Conclusion: conclusion.md
 
 
 theme:
