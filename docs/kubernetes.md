@@ -35,10 +35,10 @@ Une node est une machine physique ou virtuelle (en fonction du cluster). Tous le
 Les composants d’une node incluent :
 
 - kubelet, un agent qui permet d'exécuter chaque node et permet de vérifier que chaque conteneur est dans un pod.
-- Container Runtimes,un logiciel qui permet de faire tourner les pods, il est responsable pour les conteneurs en cours d'exécution.
+- Container Runtimes[^1],un logiciel qui permet de faire tourner les pods, il est responsable pour les conteneurs en cours d'exécution.
 - Le Container Runtime Interface (CRI) permet à kubelet d’utiliser les conteneurs sans avoir besoin de recompiler tous les composants d’un cluster.
 
-Kubernetes possède un ordonnanceur[^1] pour s’assurer du bon fonctionnement des pods avec les nodes. Ce fonctionnement dépend de contraintes comme les ressources ou les politiques.
+Kubernetes possède un ordonnanceur[^2] pour s’assurer du bon fonctionnement des pods avec les nodes. Ce fonctionnement dépend de contraintes comme les ressources ou les politiques.
 
 Le Cloud Controller Manager permet à Kubernetes de contrôler les ressources. Il possède de nombreux outils comme le node controller qui est responsable de la mise à jour des nodes afin qu’elles correspondent aux normes du serveur. Il permet également de configurer des routes dans le cloud ainsi que du filtrage de paquets, de l’adresse IP et du load balancing.
 
@@ -49,9 +49,9 @@ L’utilisation de baux permet d’avoir un mécanisme qui bloque les ressources
 Kubernetes a un daemon (kube-controller-manager) qui est composé de plusieurs contrôleurs :
 Node Controller qui permet de détecter et d’apporter une réponse si un nœud tombe en panne.
 Endpoint Controller permet de joindre les services et les pods.<br>
-Service Account and Token Controllers gère les comptes et les jetons pour l’accès à l’API.
+Service Account and Token Controllers gère les comptes et les jetons pour l’accès à l’API[^3].
 
-Il existe une communication entre les nodes et le panneau de contrôle à travers un appel gRPC.
+Il existe une communication entre les nodes et le panneau de contrôle à travers un appel gRPC[^4].
 
 Kubernetes possède un serveur API qui permet aux utilisateurs de contrôler les clusters. 
 
@@ -110,11 +110,11 @@ Le service account tokens authentifie les jetons d’une requête faite à l’A
 Tous les accès de Kubernetes ne sont pas publiquement alloués. Chaque accès passe par une  liste d’adresses IP.<br>
 Par exemple, Les nodes sont configurées pour n’accepter que les connexions qui viennent de cette liste.
 
-Lorsque l’accès est nécessaire, Kubernetes utilise OpenID Connect Tokens, un OAuth2[^2] afin qu’une application puisse utiliser des ressources extérieures au nom d’un utilisateur.
+Lorsque l’accès est nécessaire, Kubernetes utilise OpenID Connect Tokens, un OAuth2[^5] afin qu’une application puisse utiliser des ressources extérieures au nom d’un utilisateur.
 
 ### 2.3.4 - Stockage sécurisé
 
-Kubernetes définit une notion “Secrets” pour garder une information sensible comme les mots de passe ou les clés d’authentification. Il enregistre cette information dans un pod spécifique ou une image d’un conteneur. Les secrets et les crédentials ont une durée de vie courte. Kubernetes conseille d’encrypter les sauvegardes de la base de données etcd. 
+Kubernetes définit une notion “Secrets” pour garder une information sensible comme les mots de passe ou les clés d’authentification. Il enregistre cette information dans un pod spécifique ou une image[^6] d’un conteneur. Les secrets et les crédentials ont une durée de vie courte. Kubernetes conseille d’encrypter les sauvegardes de la base de données etcd. 
 
 Pour supprimer les jetons qui ne sont plus utilisés, Kubernetes appelle le daemon “kube-controller-manager” et en particulier la partie Service Account and Token Controllers.
 
@@ -134,28 +134,49 @@ De plus, kubele et les conteneurs en exécution ont besoin de cgroup dans le but
 Une faille critique a été découverte en 2018. Un utilisateur pouvait se connecter au serveur API et envoyer des requêtes directement aux serveurs backend sans avoir de vérification par le serveur API.
 Les récentes failles trouvées sur Kubernetes touchent les Windows nodes. Ces failles permettaient à un utilisateur d’escalader en mode privilège sur des nodes ou des pods qu’il  créait.
 
-## 3 - Conclusion
+## 2.5 - Sources
 
-Les conteneurs sont une technologie émergente qui permet d’exporter et d’exécuter une application en s’abstrayant de son environnement. Ceci présente deux avantages majeurs : 
+**Introduction de Kubernetes :**
 
-- Le développement et le test des applications sont grandement simplifiés
-- Les exécutables ainsi créés sont autosuffisants, limitant leur dépendances aux ressources externes et donc leur vulnérabilité.  
+- [Wikipedia](https://en.wikipedia.org/wiki/Kubernetes) - Kubernetes
+- [Wikipedia](https://en.wikipedia.org/wiki/Service_mesh) - Service Mesh
+- [Github](https://github.com/kubernetes) - Github de Kubernetes
+- [Documentation de Kubernetes](https://kubernetes.io/fr/docs/concepts/overview/what-is-kubernetes/) - What is Kubernetes
+- [Google](https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters?hl=fr#regional_clusters) - Clouds régionaux
+- [redhat](https://www.redhat.com/fr/topics/microservices) - Microservice
 
-La conteneurisation se distingue des autres formes de virtualisation par sa légèreté d’exécution et ses possibilités de gestion groupée. Ainsi, Kubernetes propose des outils efficaces de création, maintien en opération et autres formes de gestion des conteneurs visant à minimiser le temps d’arrêt de production et maximiser la sécurité des applications. 
+---
 
-En s'appuyant sur ces deux solutions, Docker et Kubernetes, il est possible de tirer le meilleur de la conteneurisation et gagner en efficacité matérielle, temporelle et économique. 
+**Fonctionnement de Kubernetes :**
 
-Kubernetes permet d’augmenter la sécurité de cette mise en relation de dockers à travers l’authentification et la gestion des ressources d’un cluster. Il ajoute également un niveau de sécurité à travers son stockage des données sensibles et sa limitation d’accès à des réseaux extérieurs d’un cluster.
+- [Documentation de Kubernetes](https://kubernetes.io) - Cluster Architecture
+- [Documentation de Kubernetes](https://kubernetes.io) - Services Networking
 
-Il faut cependant relever certains dysfonctionnements en matière de sécurité qui impactent principalement les architectures utilisant Windows. 
+---
 
-Toutes les PaaS majeures comme Microsoft, Amazon ou Google basent leurs services sur cette technologie et contribuent à son évolution permanente. La conteneurisation fait également son entrée dans les terminaux utilisateurs sous Windows 11.
+**Sécurité de Kubernetes :**
 
+- [Documentation de Kubernetes](https://kubernetes.io/docs/concepts/security/controlling-access/) - Controlling access
+- [Stack Overflow](https://stackoverflow.com/questions/63827767/how-to-set-token-auth-file-somefile-flag-to-apiserver-on-kubernetes-v1-19-0) - How to set token auth file
+- [cvedetails](https://www.cvedetails.com/vulnerability-list/vendor_id-15867/product_id-34016/Kubernetes-Kubernetes.html) - Kubernetes : Security Vulnerabilities, CVEs
+- [LEMONDEINFORMARIQUE](https://www.lemondeinformatique.fr/actualites/lire-la-faille-critique-kubernetes-corrigee-73674.html) - La faille critique de Kubernetes
 
+---
 
+**Rédaction :**
 
+- [Wikipedia](https://fr.wikipedia.org/wiki/Diagramme_des_paquetages) - Diagramme des paquetages
+- [Université de Liège](http://www.ingveh.ulg.ac.be/uploads/education/misc/REDIGER_UN_RAPPORT_TECHNIQUE.pdf) - Comment rédiger un rapport technique ?
 
+[^1]: **Runtime** : environnement d’exécution d’un programme qui est responsable de la communication entre le programme, le matériel et le système d’exploitation. 
 
-[^1]: **Ordonnanceur** : l'ordonnance est le composant du noyau du système d'exploitation choisissant l'ordre d'exécution des processus sur les processeurs d'un ordinateur.
+[^2]: **Ordonnanceur** : l'ordonnance est le composant du noyau du système d'exploitation choisissant l'ordre d'exécution des processus sur les processeurs d'un ordinateur.
 
-[^2]: **OAuth2** : Open Authorization est une norme conçue pour permettre à un site Web ou une application d'accéder aux ressources hébergées  par d’autres applications Web au nom d’un utilisateur.
+[^3]: **API** : Application Programming Interface désigne une interface qui permet à un programme de communiquer avec d’autres en se basant sur un protocole de communication commun.
+
+[^4]: **gRPC** :  gRPC est un composant permettant aux logiciels de communiquer entre eux via HTTP en utilisant l'interface local de la machine, s’abstrayant ainsi de son environnement. 
+
+[^5]: **OAuth2** : Open Authorization est une norme conçue pour permettre à un site Web ou une application d'accéder aux ressources hébergées  par d’autres applications Web au nom d’un utilisateur.
+
+[^6]: **Image** : un conteneur inactif persiste dans le temps sous forme d’image, semblable à une image de machine virtuelle. 
+

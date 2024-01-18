@@ -217,4 +217,4 @@ De plus, il est possible d’augmenter la fiabilité et le rendement des contene
 
 [^6]: **API** : Application Programming Interface désigne une interface qui permet à un programme de communiquer avec d’autres en se basant sur un protocole de communication commun.
 
-[^7]: **gRCP** :  gRPC est un composant permettant aux logiciels de communiquer entre eux via HTTP en utilisant l'interface local de la machine, s’abstrayant ainsi de son environnement. 
+[^7]: **gRPC** :  gRPC est un composant permettant aux logiciels de communiquer entre eux via HTTP en utilisant l'interface local de la machine, s’abstrayant ainsi de son environnement. 
