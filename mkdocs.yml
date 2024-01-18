@@ -8,17 +8,19 @@ site_author: Astrid LEVEQUE et Tim FROLOV
 # URL of the site
 site_url: https://docker.frolov.eu/
 # URL of the GitHub repo TODO: customize
-repo_url: https://github.com/FlagHunter01/docker-presentation
+#repo_url: https://github.com/FlagHunter01/docker-presentation
 # Name of the repo TODO: customize
-repo_name: FlagHunter01/docker-presentation
+#repo_name: FlagHunter01/docker-presentation
 # URL of docs folder FIXME: comment if help not wanted!
 #edit_uri: edit/main/docs/
 
 
 
 nav:
-    - Docker: index.md
-    - Kubernetes: kubernetes.md
+    - Rapport: 
+        - index.md
+        - 1 - Docker: docker.md
+        - 2 - Kubernetes: kubernetes.md
 
 
 theme:
@@ -112,12 +114,12 @@ plugins:
 
 
   # Revision date info for GitHub repos TODO: uncomment if repo
-  - git-revision-date-localized:
-      enable_creation_date: true
-      #fallback_to_build_date: true
-  - git-committers:
-      repository: FlagHunter01/school
-      branch: main
+  #- git-revision-date-localized:
+  #    enable_creation_date: true
+  #    #fallback_to_build_date: true
+  #- git-committers:
+  #    repository: FlagHunter01/school
+  #    branch: main
   #- git-authors
   # Optimize for offline use
   - offline

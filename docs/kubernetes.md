@@ -1,5 +1,5 @@
 ---
-title: Kubernetes
+title: 2 - Kubernetes
 description: Partie du rapport traitant de Kubernetes
 ---
 
