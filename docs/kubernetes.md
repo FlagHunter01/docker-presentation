@@ -26,7 +26,7 @@ Kubernetes est basé sur le langage de programmation Go. Il possède une communa
 
 ### 2.2.1 - Architecture
 
-!!! warning "![image](6.png)"
+![image](6.png)
 
 Les pods sont les plus petites unités informatiques déployables qui peuvent être créées et gérées dans Kubernetes. Un pod est un groupement d’un ou plusieurs conteneurs qui partagent les mêmes ressources et stockage. Le conteneur d’un pod peut être exécuté en mode privilégié.
 
@@ -77,7 +77,7 @@ Toutes les informations du cluster sont stockées dans etcd, une base de donnée
 
 La sécurité de Kubernetes est basée sur le Cloud Native Security. Cette sécurité se base sur la notion des 4 C, chaque couche du modèle s’appuyant sur la sécurité de sa couche externe.
 
-!!! warning "![image](7.png)"
+![image](7.png)
 
 La sécurité de Kubernetes se fait sur deux axes : 
 
