@@ -606,10 +606,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-conclusion" class="md-nav__link">
+  <a href="#25-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3 - Conclusion
+        2.5 - Sources
       
     </span>
   </a>
@@ -844,10 +844,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-conclusion" class="md-nav__link">
+  <a href="#25-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3 - Conclusion
+        2.5 - Sources
       
     </span>
   </a>
@@ -899,18 +899,18 @@ Il ne faut pas confondre l’utilisation de kubernetes avec :</p>
 <p>Les composants d’une node incluent :</p>
 <ul>
 <li>kubelet, un agent qui permet d'exécuter chaque node et permet de vérifier que chaque conteneur est dans un pod.</li>
-<li>Container Runtimes,un logiciel qui permet de faire tourner les pods, il est responsable pour les conteneurs en cours d'exécution.</li>
+<li>Container Runtimes<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>,un logiciel qui permet de faire tourner les pods, il est responsable pour les conteneurs en cours d'exécution.</li>
 <li>Le Container Runtime Interface (CRI) permet à kubelet d’utiliser les conteneurs sans avoir besoin de recompiler tous les composants d’un cluster.</li>
 </ul>
-<p>Kubernetes possède un ordonnanceur<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> pour s’assurer du bon fonctionnement des pods avec les nodes. Ce fonctionnement dépend de contraintes comme les ressources ou les politiques.</p>
+<p>Kubernetes possède un ordonnanceur<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> pour s’assurer du bon fonctionnement des pods avec les nodes. Ce fonctionnement dépend de contraintes comme les ressources ou les politiques.</p>
 <p>Le Cloud Controller Manager permet à Kubernetes de contrôler les ressources. Il possède de nombreux outils comme le node controller qui est responsable de la mise à jour des nodes afin qu’elles correspondent aux normes du serveur. Il permet également de configurer des routes dans le cloud ainsi que du filtrage de paquets, de l’adresse IP et du load balancing.</p>
 <p>Les applications peuvent accéder aux ressources d’un hôte sans avoir nécessairement besoin des informations contenues dans celui-ci. </p>
 <p>L’utilisation de baux permet d’avoir un mécanisme qui bloque les ressources partagées et coordonne les activités entre les différents membres d’un même ensemble.</p>
 <p>Kubernetes a un daemon (kube-controller-manager) qui est composé de plusieurs contrôleurs :
 Node Controller qui permet de détecter et d’apporter une réponse si un nœud tombe en panne.
 Endpoint Controller permet de joindre les services et les pods.<br>
-Service Account and Token Controllers gère les comptes et les jetons pour l’accès à l’API.</p>
-<p>Il existe une communication entre les nodes et le panneau de contrôle à travers un appel gRPC.</p>
+Service Account and Token Controllers gère les comptes et les jetons pour l’accès à l’API<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>.</p>
+<p>Il existe une communication entre les nodes et le panneau de contrôle à travers un appel gRPC<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>.</p>
 <p>Kubernetes possède un serveur API qui permet aux utilisateurs de contrôler les clusters. </p>
 <p>Kubernetes permet de gérer la durée de vie d’un pod et son arrêt. Un utilisateur peut également administrer chaque pod pour changer les informations. Cependant, certaines informations d’un pod sont immuables telles que son nom ou sa date de création.</p>
 <p>De plus, Kubernetes possède une “garbage collection” qui regroupe divers mécanismes pour garder un environnement propre. Par exemple, il est utilisé lorsque les pods se terminent ou pour supprimer les objets sans référence à un propriétaire.</p>
@@ -945,9 +945,9 @@ Service Account and Token Controllers gère les comptes et les jetons pour l’a
 <h3 id="233-acces-reseau">2.3.3 - Accès réseau<a class="headerlink" href="#233-acces-reseau" title="Permanent link">⚓︎</a></h3>
 <p>Tous les accès de Kubernetes ne sont pas publiquement alloués. Chaque accès passe par une  liste d’adresses IP.<br>
 Par exemple, Les nodes sont configurées pour n’accepter que les connexions qui viennent de cette liste.</p>
-<p>Lorsque l’accès est nécessaire, Kubernetes utilise OpenID Connect Tokens, un OAuth2<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> afin qu’une application puisse utiliser des ressources extérieures au nom d’un utilisateur.</p>
+<p>Lorsque l’accès est nécessaire, Kubernetes utilise OpenID Connect Tokens, un OAuth2<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> afin qu’une application puisse utiliser des ressources extérieures au nom d’un utilisateur.</p>
 <h3 id="234-stockage-securise">2.3.4 - Stockage sécurisé<a class="headerlink" href="#234-stockage-securise" title="Permanent link">⚓︎</a></h3>
-<p>Kubernetes définit une notion “Secrets” pour garder une information sensible comme les mots de passe ou les clés d’authentification. Il enregistre cette information dans un pod spécifique ou une image d’un conteneur. Les secrets et les crédentials ont une durée de vie courte. Kubernetes conseille d’encrypter les sauvegardes de la base de données etcd. </p>
+<p>Kubernetes définit une notion “Secrets” pour garder une information sensible comme les mots de passe ou les clés d’authentification. Il enregistre cette information dans un pod spécifique ou une image<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> d’un conteneur. Les secrets et les crédentials ont une durée de vie courte. Kubernetes conseille d’encrypter les sauvegardes de la base de données etcd. </p>
 <p>Pour supprimer les jetons qui ne sont plus utilisés, Kubernetes appelle le daemon “kube-controller-manager” et en particulier la partie Service Account and Token Controllers.</p>
 <p>Kubernet offre la possibilité de chiffrer les données qui ne sont pas utilisées. 
 Ces solutions permettent de réduire les risques d’attaques.</p>
@@ -958,25 +958,56 @@ Ces solutions permettent de réduire les risques d’attaques.</p>
 <h3 id="242-failles">2.4.2 - Failles<a class="headerlink" href="#242-failles" title="Permanent link">⚓︎</a></h3>
 <p>Une faille critique a été découverte en 2018. Un utilisateur pouvait se connecter au serveur API et envoyer des requêtes directement aux serveurs backend sans avoir de vérification par le serveur API.
 Les récentes failles trouvées sur Kubernetes touchent les Windows nodes. Ces failles permettaient à un utilisateur d’escalader en mode privilège sur des nodes ou des pods qu’il  créait.</p>
-<h2 id="3-conclusion">3 - Conclusion<a class="headerlink" href="#3-conclusion" title="Permanent link">⚓︎</a></h2>
-<p>Les conteneurs sont une technologie émergente qui permet d’exporter et d’exécuter une application en s’abstrayant de son environnement. Ceci présente deux avantages majeurs : </p>
+<h2 id="25-sources">2.5 - Sources<a class="headerlink" href="#25-sources" title="Permanent link">⚓︎</a></h2>
+<p><strong>Introduction de Kubernetes :</strong></p>
 <ul>
-<li>Le développement et le test des applications sont grandement simplifiés</li>
-<li>Les exécutables ainsi créés sont autosuffisants, limitant leur dépendances aux ressources externes et donc leur vulnérabilité.  </li>
+<li><a href="https://en.wikipedia.org/wiki/Kubernetes">Wikipedia</a> - Kubernetes</li>
+<li><a href="https://en.wikipedia.org/wiki/Service_mesh">Wikipedia</a> - Service Mesh</li>
+<li><a href="https://github.com/kubernetes">Github</a> - Github de Kubernetes</li>
+<li><a href="https://kubernetes.io/fr/docs/concepts/overview/what-is-kubernetes/">Documentation de Kubernetes</a> - What is Kubernetes</li>
+<li><a href="https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters?hl=fr#regional_clusters">Google</a> - Clouds régionaux</li>
+<li><a href="https://www.redhat.com/fr/topics/microservices">redhat</a> - Microservice</li>
 </ul>
-<p>La conteneurisation se distingue des autres formes de virtualisation par sa légèreté d’exécution et ses possibilités de gestion groupée. Ainsi, Kubernetes propose des outils efficaces de création, maintien en opération et autres formes de gestion des conteneurs visant à minimiser le temps d’arrêt de production et maximiser la sécurité des applications. </p>
-<p>En s'appuyant sur ces deux solutions, Docker et Kubernetes, il est possible de tirer le meilleur de la conteneurisation et gagner en efficacité matérielle, temporelle et économique. </p>
-<p>Kubernetes permet d’augmenter la sécurité de cette mise en relation de dockers à travers l’authentification et la gestion des ressources d’un cluster. Il ajoute également un niveau de sécurité à travers son stockage des données sensibles et sa limitation d’accès à des réseaux extérieurs d’un cluster.</p>
-<p>Il faut cependant relever certains dysfonctionnements en matière de sécurité qui impactent principalement les architectures utilisant Windows. </p>
-<p>Toutes les PaaS majeures comme Microsoft, Amazon ou Google basent leurs services sur cette technologie et contribuent à son évolution permanente. La conteneurisation fait également son entrée dans les terminaux utilisateurs sous Windows 11.</p>
+<hr />
+<p><strong>Fonctionnement de Kubernetes :</strong></p>
+<ul>
+<li><a href="https://kubernetes.io">Documentation de Kubernetes</a> - Cluster Architecture</li>
+<li><a href="https://kubernetes.io">Documentation de Kubernetes</a> - Services Networking</li>
+</ul>
+<hr />
+<p><strong>Sécurité de Kubernetes :</strong></p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/security/controlling-access/">Documentation de Kubernetes</a> - Controlling access</li>
+<li><a href="https://stackoverflow.com/questions/63827767/how-to-set-token-auth-file-somefile-flag-to-apiserver-on-kubernetes-v1-19-0">Stack Overflow</a> - How to set token auth file</li>
+<li><a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15867/product_id-34016/Kubernetes-Kubernetes.html">cvedetails</a> - Kubernetes : Security Vulnerabilities, CVEs</li>
+<li><a href="https://www.lemondeinformatique.fr/actualites/lire-la-faille-critique-kubernetes-corrigee-73674.html">LEMONDEINFORMARIQUE</a> - La faille critique de Kubernetes</li>
+</ul>
+<hr />
+<p><strong>Rédaction :</strong></p>
+<ul>
+<li><a href="https://fr.wikipedia.org/wiki/Diagramme_des_paquetages">Wikipedia</a> - Diagramme des paquetages</li>
+<li><a href="http://www.ingveh.ulg.ac.be/uploads/education/misc/REDIGER_UN_RAPPORT_TECHNIQUE.pdf">Université de Liège</a> - Comment rédiger un rapport technique ?</li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p><strong>Ordonnanceur</strong> : l'ordonnance est le composant du noyau du système d'exploitation choisissant l'ordre d'exécution des processus sur les processeurs d'un ordinateur.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><strong>Runtime</strong> : environnement d’exécution d’un programme qui est responsable de la communication entre le programme, le matériel et le système d’exploitation.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p><strong>OAuth2</strong> : Open Authorization est une norme conçue pour permettre à un site Web ou une application d'accéder aux ressources hébergées  par d’autres applications Web au nom d’un utilisateur.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><strong>Ordonnanceur</strong> : l'ordonnance est le composant du noyau du système d'exploitation choisissant l'ordre d'exécution des processus sur les processeurs d'un ordinateur.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><strong>API</strong> : Application Programming Interface désigne une interface qui permet à un programme de communiquer avec d’autres en se basant sur un protocole de communication commun.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><strong>gRPC</strong> :  gRPC est un composant permettant aux logiciels de communiquer entre eux via HTTP en utilisant l'interface local de la machine, s’abstrayant ainsi de son environnement.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><strong>OAuth2</strong> : Open Authorization est une norme conçue pour permettre à un site Web ou une application d'accéder aux ressources hébergées  par d’autres applications Web au nom d’un utilisateur.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p><strong>Image</strong> : un conteneur inactif persiste dans le temps sous forme d’image, semblable à une image de machine virtuelle.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
