@@ -6,7 +6,7 @@ site_description: Version web ne notre rapport sur la recherche documentaire con
 site_author: Astrid LEVEQUE et Tim FROLOV
 # Copyright notice in the footer
 # URL of the site
-site_url: https://docker.frolov.eu/
+site_url: http://docker.frolov.eu/
 # URL of the GitHub repo TODO: customize
 #repo_url: https://github.com/FlagHunter01/docker-presentation
 # Name of the repo TODO: customize
